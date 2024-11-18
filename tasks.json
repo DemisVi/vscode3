@@ -1,0 +1,70 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/test.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary;ForceNoAlign"
+            ],
+            "problemMatcher": "$msCompile", 
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "publish",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "-c:release",
+                "--sc:false",
+                "-p:publishsinglefile=true",
+                "${workspaceFolder}/test.csproj",
+                "-o:${input:prefix}",
+                "-p:assemblyname=${input:name}",
+                "-p:deleteexistingfiles=false",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary;ForceNoAlign"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "quick publish",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "-c:release",
+                "--sc:false",
+                "-p:publishsinglefile=true",
+                "${workspaceFolder}/test.csproj",
+                "-o:publish",
+                "-p:assemblyname=Program",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary;ForceNoAlign"
+            ],
+            "problemMatcher": "$msCompile"
+        }
+    ],
+    "inputs": [
+        {
+            "id": "prefix",
+            "description": "Path prefix:",
+            "type": "promptString",
+            "default": "C:/Users/${env:USERNAME}/.dotnet/tools",
+        },
+        {
+            "id": "name",
+            "description": "Exe name:",
+            "default": "${workspaceFolderBasename}",
+            "type": "promptString",
+        }
+    ]
+}
